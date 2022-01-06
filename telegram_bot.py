@@ -10,7 +10,6 @@ def crypta(crp):
     header = {
         'user-agent': UserAgent().random
     }
-
     answer = requests.get(url, headers=header)
     soup = BeautifulSoup(answer.text, 'lxml')
     return json.loads(soup.text)["USD"]
@@ -78,7 +77,7 @@ async def bot_message(message: types.Message):
             if ltc[0] > ltc[-1]:
                 persents_ltc = ((ltc[0] - ltc[-1]) / ltc[0]) * 100
                 await bot.send_message(message.from_user.id, f'Курс LTC {ltc[-1]} USD\n'
-                                                             f'Курс LTC упал на {str(persents_btc)[:7]}%\n'
+                                                             f'Курс LTC упал на {str(persents_ltc)[:7]}%\n'
                                                              f'----------------')
 
             elif ltc[0] < ltc[-1]:
@@ -90,7 +89,7 @@ async def bot_message(message: types.Message):
                 await bot.send_message(message.from_user.id, f'Курс LTC остался без изменений'
                                                              f'----------------')
             await bot.send_message(message.from_user.id, '----Курсы криптовалют меняються----')
-            time.sleep(30)
+            time.sleep(120)
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
 
